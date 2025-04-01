@@ -3,10 +3,13 @@ import os
 import datetime
 import csv
 import sqlite3
+from datetime import timedelta
 import psycopg2
 
 app = Flask(__name__, static_folder="static")
 app.secret_key = "supersecretkey" 
+app.config["SESSION_PERMANENT"] = True
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30) 
 
 
 # 🔹 URL de la base de datos en Render
