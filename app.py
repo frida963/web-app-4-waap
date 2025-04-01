@@ -125,7 +125,7 @@ def query_page():
     with psycopg2.connect(DATABASE_URL, sslmode='require') as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT query, timestamp FROM queries ORDER BY timestamp DESC")
-            return cur.fetchall()
+            saved_queries = cur.fetchall()
 
     if request.method == "POST":
         query_text = request.form.get("query")
