@@ -31,12 +31,6 @@ conn.commit()
 
 
 # HEADERS 
-@app.before_request
-def log_headers():
-    print("DEBUG: Headers de la solicitud")
-    for header, value in request.headers.items():
-        print(f"{header}: {value}")
-
 #@app.before_request
 #def block_if_no_security_header():
 #    if "X-WAF-Token" not in request.headers:
@@ -47,6 +41,7 @@ def add_headers(response):
     response.headers["X-Security-Test"] = "Passed"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Content-Security-Policy"] = "default-src 'self'"
+    session.modified = True 
     return response
 
 # ✅ Función para agregar headers guardados en sesión
@@ -55,6 +50,7 @@ def add_persistent_headers(response):
     if "custom_headers" in session:
         for key, value in session["custom_headers"].items():
             response.headers[key] = value
+    session.modified = True 
     return response
 
 # ✅ Función para agregar un nuevo header a la sesión
@@ -62,6 +58,7 @@ def add_header_to_session(header_name, header_value):
     if "custom_headers" not in session:
         session["custom_headers"] = {}
     session["custom_headers"][header_name] = header_value
+    session.modified = True 
 
 UPLOAD_FOLDER = "uploads"
 DOWNLOAD_FOLDER = "downloads"
