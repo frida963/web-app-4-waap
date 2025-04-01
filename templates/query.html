@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to the Query Page</h2>
+        <form method="POST" action="/query">
+            <textarea name="query" placeholder="Enter your query here"></textarea>
+            <button type="submit">Save Query</button>
+        </form>
+
+        <h3>Saved Queries</h3>
+        <ul>
+            {% for query in saved_queries %}
+                <li><strong>{{ query[0] }}</strong>: {{ query[1] }}</li>
+            {% endfor %}
+        </ul>
+        
+        <a href="/upload" class="btn">Upload a File</a>
+        <a href="/download" class="btn">Download a File</a>
+        <a href="/logout" class="btn">Logout</a>
+    </div>
+</body>
+</html>
